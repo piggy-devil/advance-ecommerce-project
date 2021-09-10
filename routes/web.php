@@ -7,11 +7,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\User\CashController;
 use App\Http\Controllers\API\TambonController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\User\AllUserController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\WishlistController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Frontend\HomeBlogController;
 use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -104,6 +107,9 @@ Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMi
 
 Route::post('/add-to-wishlist/{product_id}', [CartController::class, 'AddToWishlist']);
 
+
+/////////////////////  User Must Login  ////
+
 Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' => 'User'], function () {
     // Wishlist page
     Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
@@ -129,6 +135,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['user', 'auth'], 'namespace' 
     Route::get('/return/order/list', [AllUserController::class, 'ReturnOrderList'])->name('return.order.list');
 
     Route::get('/cancel/orders', [AllUserController::class, 'CancelOrders'])->name('cancel.orders');
+
+    /// Order Traking Route 
+    Route::post('/order/tracking', [AllUserController::class, 'OrderTraking'])->name('order.tracking'); 
+
 });
 
 // My Cart Page All Routes
@@ -150,6 +160,22 @@ Route::get('/blog', [HomeBlogController::class, 'AddBlogPost'])->name('home.blog
 Route::get('/post/details/{id}', [HomeBlogController::class, 'DetailsBlogPost'])->name('post.details');
 
 Route::get('/blog/category/post/{category_id}', [HomeBlogController::class, 'HomeBlogCatPost']);
+
+/// Frontend Product Review Routes
+
+Route::post('/review/store', [ReviewController::class, 'ReviewStore'])->name('review.store');
+
+
+
+/// Product Search Route 
+Route::post('/search', [IndexController::class, 'ProductSearch'])->name('product.search');
+
+// Advance Search Routes 
+Route::post('search-product', [IndexController::class, 'SearchProduct']);
+
+// Shop Page Route 
+Route::get('/shop', [ShopController::class, 'ShopPage'])->name('shop.page');
+Route::post('/shop/filter', [ShopController::class, 'ShopFilter'])->name('shop.filter');
 
 
 
@@ -409,6 +435,30 @@ Route::prefix('return')->group(function () {
     Route::get('/admin/return/approve/{order_id}', [ReturnController::class, 'ReturnRequestApprove'])->name('return.approve');
 
     Route::get('/admin/all/request', [ReturnController::class, 'ReturnAllRequest'])->name('all.request');
+});
+
+// Admin Manage Review Routes 
+Route::prefix('review')->group(function () {
+
+    Route::get('/pending', [ReviewController::class, 'PendingReview'])->name('pending.review');
+
+    Route::get('/admin/approve/{id}', [ReviewController::class, 'ReviewApprove'])->name('review.approve');
+
+    Route::get('/publish', [ReviewController::class, 'PublishReview'])->name('publish.review');
+
+    Route::get('/delete/{id}', [ReviewController::class, 'DeleteReview'])->name('delete.review');
+});
+
+// Admin Manage Stock Routes 
+Route::prefix('stock')->group(function () {
+
+    Route::get('/product', [ProductController::class, 'ProductStock'])->name('product.stock');
+});
+
+// Admin User Role Routes 
+Route::prefix('adminuserrole')->group(function () {
+
+    Route::get('/all', [AdminUserController::class, 'AllAdminRole'])->name('all.admin.user');
 });
 
 // Route::get('/tambon', [TambonController::class, 'index']);

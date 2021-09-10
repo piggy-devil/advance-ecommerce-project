@@ -12,6 +12,7 @@
             <li><a href="{{ route('wishlist') }}"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="{{ route('mycart') }}"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>Checkout</a></li>
+            <li><a href="" type="button" data-toggle="modal" data-target="#ordertraking"><i class="icon fa fa-check"></i>Order Traking</a></li>
 
             <li>
 
@@ -65,8 +66,8 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
 
-        @php
-         $setting = App\Models\SiteSetting::find(1);
+          @php
+          $setting = App\Models\SiteSetting::find(1);
           @endphp
 
 
@@ -81,7 +82,8 @@
           <!-- /.contact-row -->
           <!-- ============================================================= SEARCH AREA ============================================================= -->
           <div class="search-area">
-            <form>
+            <form method="post" action="{{ route('product.search') }}">
+              @csrf
               <div class="control-group">
                 <ul class="categories-filter animate-dropdown">
                   <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="category.html">Categories <b class="caret"></b></a>
@@ -94,10 +96,11 @@
                     </ul>
                   </li>
                 </ul>
-                <input class="search-field" placeholder="Search here..." />
-                <a class="search-button" href="#"></a>
+                <input class="search-field" onfocus="search_result_show()" onblur="search_result_hide()" id="search" name="search" placeholder="Search here..." />
+                <button class="search-button" type="submit"></button>
               </div>
             </form>
+            <div id="searchProducts"></div>
           </div>
           <!-- /.search-area -->
           <!-- ============================================================= SEARCH AREA : END ============================================================= -->
@@ -235,6 +238,7 @@
                 @endforeach
                 <!-- // End Category Foreach -->
 
+                <li> <a href="{{ route('shop.page') }}">Shop</a> </li>
                 <li class="dropdown  navbar-right special-menu"> <a href="#">Todays offer</a> </li>
                 <li class="dropdown  navbar-right special-menu"> <a href="{{ route('home.blog') }}">Blog</a> </li>
               </ul>
@@ -255,5 +259,62 @@
   </div>
   <!-- /.header-nav -->
   <!-- ============================================== NAVBAR : END ============================================== -->
+  <!-- Order Traking Modal -->
+  <div class="modal fade" id="ordertraking" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Track Your Order </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form method="post" action="{{ route('order.tracking') }}">
+            @csrf
+            <div class="modal-body">
+              <label>Invoice Code</label>
+              <input type="text" name="code" required="" class="form-control" placeholder="Your Order Invoice Number">
+            </div>
+
+            <button class="btn btn-danger" type="submit" style="margin-left: 17px;"> Track Now </button>
+
+          </form>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 </header>
+
+<style>
+  .search-area {
+    position: relative;
+  }
+
+  #searchProducts {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    z-index: 999;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+</style>
+
+
+<script>
+  function search_result_hide() {
+    $("#searchProducts").slideUp();
+  }
+
+  function search_result_show() {
+    $("#searchProducts").slideDown();
+  }
+</script>
