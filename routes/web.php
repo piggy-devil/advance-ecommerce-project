@@ -4,6 +4,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\API\AmuletAccountController;
+use App\Http\Controllers\API\AmuletMaterialController;
+use App\Http\Controllers\API\AmuletTypeController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\User\CashController;
 use App\Http\Controllers\API\TambonController;
@@ -280,6 +283,43 @@ Route::middleware(['auth:admin'])->group(function () {
         Route::get('/inactive/{id}', [SliderController::class, 'SliderInactive'])->name('slider.inactive');
 
         Route::get('/active/{id}', [SliderController::class, 'SliderActive'])->name('slider.active');
+    });
+
+    // Admin AmuletType All Routes
+    Route::prefix('amulettype')->group(function () {
+        Route::get('/view', [AmuletTypeController::class, 'AmuletTypeView'])->name('all.amulettype');
+        Route::post('/store', [AmuletTypeController::class, 'AmuletTypeStore'])->name('amulettype.store');
+        Route::get('/edit/{id}', [AmuletTypeController::class, 'AmuletTypeEdit'])->name('amulettype.edit');
+        Route::post('/update/{id}', [AmuletTypeController::class, 'AmuletTypeUpdate'])->name('amulettype.update');
+        Route::get('/delete/{id}', [AmuletTypeController::class, 'AmuletTypeDelete'])->name('amulettype.delete');
+
+        // AmuletMeterial All Routes
+        Route::prefix('material')->group(function () {
+            Route::get('/view', [AmuletMaterialController::class, 'AmuletMaterialView'])->name('all.amuletmaterial');
+            Route::post('/store', [AmuletMaterialController::class, 'AmuletMaterialStore'])->name('amuletmaterial.store');
+            Route::get('/edit/{id}', [AmuletMaterialController::class, 'AmuletMaterialEdit'])->name('amuletmaterial.edit');
+            Route::post('/update/{id}', [AmuletMaterialController::class, 'AmuletMaterialUpdate'])->name('amuletmaterial.update');
+            Route::get('/delete/{id}', [AmuletMaterialController::class, 'AmuletMaterialDelete'])->name('amuletmaterial.delete');
+
+        });
+    });
+
+    // Admin AmuletAccount All Routes 
+
+    Route::prefix('amuletaccount')->group(function () {
+
+        Route::get('/add', [AmuletAccountController::class, 'AddAmuletAccount'])->name('all.add-amulet-account');
+        Route::post('/store', [AmuletAccountController::class, 'StoreAmuletAccount'])->name('amulet-account-store');
+        Route::get('/manage', [AmuletAccountController::class, 'ManageAmuletAccount'])->name('manage-amulet-account');
+        // Route::get('/edit/{id}', [AmuletAccountController::class, 'EditAmuletAccount'])->name('amulet-account-edit');
+        // Route::post('/data/update', [AmuletAccountController::class, 'ProductDataUpdate'])->name('product-update');
+        // Route::post('/image/update', [AmuletAccountController::class, 'MultiImageUpdate'])->name('update-product-image');
+        // Route::post('/thambnail/update', [AmuletAccountController::class, 'ThambnailImageUpdate'])->name('update-product-thambnail');
+        // Route::get('/multiimg/delete/{id}', [AmuletAccountController::class, 'MultiImageDelete'])->name('product.multiimg.delete');
+        // Route::get('/delete/{id}', [AmuletAccountController::class, 'ProductDelete'])->name('product.delete');
+
+        // Route::get('/inactive/{id}', [AmuletAccountController::class, 'ProductInactive'])->name('product.inactive');
+        // Route::get('/active/{id}', [AmuletAccountController::class, 'ProductActive'])->name('product.active');
     });
 });
 

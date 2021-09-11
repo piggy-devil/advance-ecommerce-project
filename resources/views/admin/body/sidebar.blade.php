@@ -28,6 +28,34 @@ $route = Route::current()->getName();
         </a>
       </li>
 
+      <li class="treeview {{ ($prefix == '/amuletaccount')? 'active' : '' }}">
+        <a href="#">
+          <i data-feather="message-circle"></i>
+          <span>บัญชีพระเครื่อง</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="{{ ($route == 'all.add-amulet-account')? 'active':'' }}"><a href="{{ route('all.add-amulet-account') }}"><i class="ti-more"></i>เพิ่มรายการ</a></li>
+          <li class="{{ ($route == 'manage-amulet-account')? 'active':'' }}"><a href="{{ route('manage-amulet-account') }}"><i class="ti-more"></i>รายการทั้งหมด</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview {{ ($prefix == '/amulettype')? 'active' : '' }}">
+        <a href="#">
+          <i data-feather="message-circle"></i>
+          <span>ประเภทพระเครื่อง</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="{{ ($route == 'all.amulettype')? 'active':'' }}"><a href="{{ route('all.amulettype') }}"><i class="ti-more"></i>ประเภท (ทั้งหมด)</a></li>
+          <li class="{{ ($route == 'all.amuletmaterial')? 'active':'' }}"><a href="{{ route('all.amuletmaterial') }}"><i class="ti-more"></i>เนื้อ/วัสดุ (ทั้งหมด)</a></li>
+        </ul>
+      </li>
+
       <li class="treeview {{ ($prefix == '/brand')? 'active' : '' }}">
         <a href="#">
           <i data-feather="message-circle"></i>
