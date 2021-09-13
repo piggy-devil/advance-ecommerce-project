@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Role\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -76,4 +77,39 @@ class AdminProfileController extends Controller
 		return view('backend.user.all_user',compact('users'));
 	}
     
+    public function AdminEditUserRole($user_id, $role_id) {
+        $user = User::findOrFail($user_id);
+        $roles = Role::get();
+        return view('backend.user.manage_user', compact('user', 'roles'));
+    }
+
+    public function AdminUpdateUserRole(Request $request, $user_id){
+
+        $user = User::findOrFail($user_id);
+        $user->role_id = $request->role_id;
+        if($user->isDirty('role_id')) {
+            $user->save();
+            $notification = array(
+                'message' => 'คุณแก้ไข สิทธิผู้ใช้งาน สำเร็จ!',
+                'alert-type' => 'info'
+            );
+    
+            return redirect()->route('all-users')->with($notification);
+        }
+
+        return redirect()->route('all-users');
+        
+    }
+
+    public function AdminDeleteUser($user_id) {
+        $user = User::findOrFail($user_id);
+        $user->delete();
+
+        $notification = array(
+            'message' => 'คุณลบผู้ใช้งาน สำเร็จ!',
+            'alert-type' => 'info'
+        );
+
+        return redirect()->back()->with($notification);
+    }
 }

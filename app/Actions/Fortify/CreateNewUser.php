@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Role\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -32,11 +33,12 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'phone' => $input['phone'],
+            'role_id' => Role::where('name', 'Viewer')->first()->id,
             'password' => Hash::make($input['password']),
         ]);
 
         $notification = array(
-            'message' => 'Admin User Created Successfully',
+            'message' => 'User Created Successfully',
             'alert-type' => 'success'
         );
 

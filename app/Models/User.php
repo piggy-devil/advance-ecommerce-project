@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Role\Role;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'phone',
         'password',
         'last_seen',
+        'role_id',
     ];
 
     /**
@@ -65,5 +67,13 @@ class User extends Authenticatable
      // User Active Show
      public function UserOnline(){
         return Cache::has('user-is-online' . $this->id);
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasPermission($name) {
+        return $this->role->permissions()->where('name', $name)->exists();
     }
 }

@@ -29,7 +29,8 @@
                                         <th>Image </th>
                                         <th>Name </th>
                                         <th>Email</th>
-                                        <th>Phone</th>
+                                        <th>Role</th>
+                                        <th>Permission</th>
                                         <th>Status</th>
                                         <th>Action</th>
 
@@ -41,7 +42,16 @@
                                         <td><img src="{{ (!empty($user->profile_photo_path))? url('upload/user_images/'.$user->profile_photo_path):url('upload/no_image.png') }}" style="width: 50px; height: 50px;"> </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->role->name ?? 'Anonymous' }}</td>
+                                        <td>
+                                            <ul>
+                                                @foreach ($user->role->permissions ?? [] as $permission)
+                                                    <li>
+                                                        {{$permission->name}}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
 
                                         <td>
                                             @if($user->UserOnline())
@@ -52,8 +62,8 @@
                                         </td>
 
                                         <td>
-                                            <a href=" " class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i> </a>
-                                            <a href=" " class="btn btn-danger" title="Delete Data" id="delete">
+                                            <a href="{{ route('admin.edit.role.user', ['user_id' => $user->id, 'role_id' => $user->role->id]) }}" class="btn btn-info" title="Edit Data"><i class="fa fa-pencil"></i> </a>
+                                            <a href="{{ route('admin.delete.user', $user->id) }}" class="btn btn-danger" title="Delete Data" id="delete">
                                                 <i class="fa fa-trash"></i></a>
                                         </td>
 

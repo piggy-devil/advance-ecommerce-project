@@ -433,6 +433,10 @@ Route::prefix('reports')->group(function () {
 Route::prefix('alluser')->group(function () {
 
     Route::get('/view', [AdminProfileController::class, 'AllUsers'])->name('all-users');
+    Route::get('/edit/{user_id}/user/{role_id}', [AdminProfileController::class, 'AdminEditUserRole'])->name('admin.edit.role.user');
+    Route::post('/update-role-user/{user_id}', [AdminProfileController::class, 'AdminUpdateUserRole'])->name('admin.update.role.user');
+    Route::get('/delete/{user_id}', [AdminProfileController::class, 'AdminDeleteUser'])->name('admin.delete.user');
+
 });
 
 // Admin blog Routes 
