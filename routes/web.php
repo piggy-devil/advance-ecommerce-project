@@ -4,9 +4,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\API\AmuletAccountController;
-use App\Http\Controllers\API\AmuletMaterialController;
-use App\Http\Controllers\API\AmuletTypeController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\User\CashController;
 use App\Http\Controllers\API\TambonController;
@@ -20,6 +17,7 @@ use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\User\CartPageController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\WishlistController;
+use App\Http\Controllers\API\AmuletTypeController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ReturnController;
@@ -27,8 +25,11 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Frontend\AccountController;
+use App\Http\Controllers\API\AmuletAccountController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Frontend\HomeBlogController;
+use App\Http\Controllers\API\AmuletMaterialController;
 use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\AdminProfileController;
@@ -163,6 +164,23 @@ Route::get('/blog', [HomeBlogController::class, 'AddBlogPost'])->name('home.blog
 Route::get('/post/details/{id}', [HomeBlogController::class, 'DetailsBlogPost'])->name('post.details');
 
 Route::get('/blog/category/post/{category_id}', [HomeBlogController::class, 'HomeBlogCatPost']);
+
+// Frontend Account Amulet All Routes
+Route::prefix('account')->group(function () {
+
+    Route::get('/add', [AccountController::class, 'AddAccount'])->name('add-account');
+    // Route::post('/store', [AccountController::class, 'StoreAccount'])->name('account-store');
+    // Route::get('/manage', [AccountController::class, 'ManageAccount'])->name('manage-account');
+    // Route::get('/edit/{id}', [AmuletAccountController::class, 'EditAmuletAccount'])->name('amulet-account-edit');
+    // Route::post('/data/update', [AmuletAccountController::class, 'ProductDataUpdate'])->name('product-update');
+    // Route::post('/image/update', [AmuletAccountController::class, 'MultiImageUpdate'])->name('update-product-image');
+    // Route::post('/thambnail/update', [AmuletAccountController::class, 'ThambnailImageUpdate'])->name('update-product-thambnail');
+    // Route::get('/multiimg/delete/{id}', [AmuletAccountController::class, 'MultiImageDelete'])->name('product.multiimg.delete');
+    // Route::get('/delete/{id}', [AmuletAccountController::class, 'ProductDelete'])->name('product.delete');
+
+    // Route::get('/inactive/{id}', [AmuletAccountController::class, 'ProductInactive'])->name('product.inactive');
+    // Route::get('/active/{id}', [AmuletAccountController::class, 'ProductActive'])->name('product.active');
+});
 
 /// Frontend Product Review Routes
 

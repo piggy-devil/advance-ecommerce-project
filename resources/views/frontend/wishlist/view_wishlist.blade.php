@@ -2,7 +2,7 @@
 @section('content')
 
 @section('title')
- Wish List Page 
+Wish List Page
 @endsection
 
 
@@ -22,26 +22,29 @@
 		<div class="my-wishlist-page">
 			<div class="row">
 				<div class="col-md-12 my-wishlist">
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr>
-					<th colspan="4" class="heading-title">My Wishlist</th>
-				</tr>
-			</thead>
-			<tbody id="wishlist">
-				
-				 
-			</tbody>
-		</table>
-	</div>
-</div>			</div><!-- /.row -->
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th colspan="4" class="heading-title">My Wishlist</th>
+								</tr>
+							</thead>
+							<tbody id="wishlist">
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div><!-- /.row -->
 		</div><!-- /.sigin-in-->
+	</div>
+</div>
 
 
 
 <br>
- @include('frontend.body.brands')
+@include('frontend.body.brands')
 </div>
 
 

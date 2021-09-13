@@ -241,6 +241,10 @@
                 <li> <a href="{{ route('shop.page') }}">Shop</a> </li>
                 <li class="dropdown  navbar-right special-menu"> <a href="#">Todays offer</a> </li>
                 <li class="dropdown  navbar-right special-menu"> <a href="{{ route('home.blog') }}">Blog</a> </li>
+                @can('create', App\Models\Amulet\AmuletAccount::class)
+                  
+                <li class="dropdown  navbar-right special-menu"> <a href="{{ route('add-account') }}">บัญชี</a> </li>
+                @endcan
               </ul>
               <!-- /.navbar-nav -->
               <div class="clearfix"></div>
